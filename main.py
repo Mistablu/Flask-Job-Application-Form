@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -24,6 +25,12 @@ def index():
         email = request.form["email"]
         date = request.form["date"]
         occupation = request.form["occupation"]
+        date_object = datetime.strptime(date, "%Y-%m-%d")
+
+        form = Form(first_name=first_name, last_name=last_name,
+                    email=email, date=date_object, occupation=occupation)
+        db.session.add(form)
+        db.session.commit()
 
 
     if request.method == "GET":
